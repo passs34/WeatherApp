@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface WeatherViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -17,6 +18,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelPressure;
 @property (weak, nonatomic) IBOutlet UILabel *labelSunrise;
 @property (weak, nonatomic) IBOutlet UILabel *labelSunset;
-
 
 @end

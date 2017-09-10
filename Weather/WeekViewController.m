@@ -13,9 +13,12 @@
 #import <CoreLocation/CoreLocation.h>
 #import "WeekWeatherUpdate.h"
 #import "TableViewCell.h"
+#import "WeatherManager.h"
 
 @interface WeekViewController () <CLLocationManagerDelegate>
 @property (nonatomic) NSArray *weekArray;
+@property (nonatomic, strong) WeatherManager *weatherManager;
+
 @end
 
 @implementation WeekViewController {
@@ -31,12 +34,8 @@
     [locationManager requestWhenInUseAuthorization];
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [locationManager startUpdatingLocation];
+    self.weatherManager = [[WeatherManager alloc] init];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,30 +45,17 @@
 
 -(void)getWeatherWithCoordinates:(CLLocationCoordinate2D)coordinates {
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     NSString *urlString = [NSString stringWithFormat:@"%@lat=%f&lon=%f%@", @"http://api.openweathermap.org/data/2.5/forecast?" , coordinates.latitude, coordinates.longitude, @"&units=metric&APPID=c5d4c2e7b159d4fa7b5dddd06d157141"];
     
-    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        
+    [self.weatherManager getWeatherWithURL:urlString controller:self completion:^(id responseObject) {
         NSError *error;
         WeekWeatherUpdate *weather = [[WeekWeatherUpdate alloc] initWithDictionary:responseObject error:&error];
         NSLog(@"%@",weather);
         self.weekArray = weather.weather;
         
         [self.tabelView reloadData];
-        
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
     }];
-}
-
--(void)showErrorAlert:(NSError *)error {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:action];
-    [self presentViewController:alert animated:YES completion:nil];
     
 }
 

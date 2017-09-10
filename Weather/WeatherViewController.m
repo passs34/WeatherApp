@@ -10,9 +10,10 @@
 #import <AFNetworking.h>
 #import "WeatherUpdate.h"
 #import <CoreLocation/CoreLocation.h>
+#import "WeatherManager.h"
 
 @interface WeatherViewController () <CLLocationManagerDelegate>
-
+@property (nonatomic, strong) WeatherManager *weatherManager;
 @end
 
 @implementation WeatherViewController {
@@ -28,26 +29,18 @@
     [locationManager requestWhenInUseAuthorization];
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [locationManager startUpdatingLocation];
+    self.weatherManager = [[WeatherManager alloc] init];
+   
 }
 
-
 -(void)getWeatherWithCoordinates:(CLLocationCoordinate2D)coordinates {
-    
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@lat=%f&lon=%f%@", @"http://api.openweathermap.org/data/2.5/weather?" , coordinates.latitude, coordinates.longitude, @"&units=metric&APPID=c5d4c2e7b159d4fa7b5dddd06d157141"];
     
-    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        
+    [self.weatherManager getWeatherWithURL:urlString controller:self completion:^(id responseObject) {
         NSError *error;
         WeatherUpdate *weather = [[WeatherUpdate alloc] initWithDictionary:responseObject error:&error];
         NSLog(@"%@",weather);
         [self updateUIWithJSON:weather];
-        
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
     }];
 }
 
@@ -63,14 +56,6 @@
     self.labelSunrise.text = [NSString stringWithFormat:@"Sunrise:\n %@",[formatter stringFromDate:weather.sunrise]];
     self.labelWind.text = [NSString stringWithFormat:@"Wind:\n %.1f",weather.speed];
 
-}
-
--(void)showErrorAlert:(NSError *)error {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-    [alert addAction:action];
-    [self presentViewController:alert animated:YES completion:nil];
-    
 }
 
 - (void)didReceiveMemoryWarning {
