@@ -130,6 +130,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D23132E11F667755001F72CA /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				D20287A71F6458DD005EECED /* WeatherManager.h */,
+				D20287A81F6458DD005EECED /* WeatherManager.m */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 		D237D06B1F5EF19B0034F117 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,8 +148,6 @@
 				D23533931F606DD40059E754 /* Weather.m */,
 				D23533981F608B010059E754 /* WeekWeatherUpdate.h */,
 				D23533991F608B010059E754 /* WeekWeatherUpdate.m */,
-				D20287A71F6458DD005EECED /* WeatherManager.h */,
-				D20287A81F6458DD005EECED /* WeatherManager.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -148,6 +155,8 @@
 		D237D06C1F5EF1A80034F117 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D23533951F60835D0059E754 /* TableViewCell.h */,
+				D23533961F60835D0059E754 /* TableViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -161,8 +170,6 @@
 				D237D0751F5EF21A0034F117 /* CityViewController.m */,
 				D237D07A1F5F08740034F117 /* WeekViewController.h */,
 				D237D07B1F5F08740034F117 /* WeekViewController.m */,
-				D23533951F60835D0059E754 /* TableViewCell.h */,
-				D23533961F60835D0059E754 /* TableViewCell.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -203,6 +210,7 @@
 				D237D06D1F5EF1B30034F117 /* Controller */,
 				D237D06C1F5EF1A80034F117 /* View */,
 				D237D06B1F5EF19B0034F117 /* Model */,
+				D23132E11F667755001F72CA /* Managers */,
 				D2F727EC1F5EE9A4001AE6A2 /* AppDelegate.h */,
 				D2F727ED1F5EE9A4001AE6A2 /* AppDelegate.m */,
 				D2F727F21F5EE9A4001AE6A2 /* Main.storyboard */,
