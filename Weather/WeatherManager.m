@@ -8,6 +8,7 @@
 
 #import "WeatherManager.h"
 #import <AFNetworking.h>
+#import "LocationManager.h"
 
 @implementation WeatherManager
 
@@ -27,14 +28,19 @@
         NSLog(@"JSON: %@", responseObject);
         completion(responseObject); 
         
-        
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         [self showErrorAlert:error controller:controller];
     }];
-    
 }
 
-
-
+-(void)showErrorServerAlert:(NSError*)error controller:(UIViewController*)controller {
+    
+    UIAlertController *serverAlert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Repeat request???" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *actionBotton = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    [[LocationManager sharedInstance] startUpdatingLocation];
+    }];
+    [serverAlert addAction:actionBotton];
+    [controller presentViewController:serverAlert animated:YES completion:nil];
+}
 
 @end

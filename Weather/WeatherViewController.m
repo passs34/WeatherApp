@@ -33,15 +33,19 @@
     
     [self.weatherManager getWeatherWithURL:urlString controller:self completion:^(id responseObject) {
         NSError *error;
-        WeatherUpdate *weather = [[WeatherUpdate alloc] initWithDictionary:responseObject error:&error];
+        NSUInteger i = [responseObject count];
+        NSLog(@"%lu", (unsigned long)i);
+WeatherUpdate *weather = [[WeatherUpdate alloc] initWithDictionary:responseObject error:&error];
         NSLog(@"%@",weather);
-       
-        [self updateUIWithJSON:weather];
+        if (i <= 0 ) {
+           WeatherManager *manager = [[WeatherManager alloc] init];
+            [manager showErrorServerAlert:error controller:self];
+        } else {
+            [self updateUIWithJSON:weather];}
     }];
 }
 
 -(void)updateUIWithJSON:(WeatherUpdate *)weather {
-    
     self.labelCity.text = weather.city;
     self.labelTemp.text = [NSString stringWithFormat:@"%ld", (long)weather.temp];
     self.labelWeather.text = ((Weather *)weather.weather[0]).main;
@@ -51,13 +55,11 @@
     self.labelSunset.text = [NSString stringWithFormat:@"Sunset:\n %@",[formatter stringFromDate:weather.sunset]];
     self.labelSunrise.text = [NSString stringWithFormat:@"Sunrise:\n %@",[formatter stringFromDate:weather.sunrise]];
     self.labelWind.text = [NSString stringWithFormat:@"Wind:\n %.1f",weather.speed];
-
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 @end

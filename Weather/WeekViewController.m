@@ -16,6 +16,7 @@
 #import "WeatherManager.h"
 #import "Urlmanagers.h"
 #import "LocationManager.h"
+
 @interface WeekViewController () <CLLocationManagerDelegate>
 @property (nonatomic) NSArray *weekArray;
 @property (nonatomic, strong) WeatherManager *weatherManager;
@@ -41,15 +42,18 @@
     
     [self.weatherManager getWeatherWithURL:urlString controller:self completion:^(id responseObject) {
         NSError *error;
+        NSUInteger i = [responseObject count];
+        NSLog(@"%lu", (unsigned long)i);
         WeekWeatherUpdate *weather = [[WeekWeatherUpdate alloc] initWithDictionary:responseObject error:&error];
         NSLog(@"%@",weather);
         self.weekArray = weather.weather;
-        
-        [self.tabelView reloadData];
+        if (i <= 0 ) {
+            WeatherManager *manager = [[WeatherManager alloc] init];
+            [manager showErrorServerAlert:error controller:self];
+        } else {
+            [self.tabelView reloadData];}
     }];
-    
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.weekArray.count;
 }

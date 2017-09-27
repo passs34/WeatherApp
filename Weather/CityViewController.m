@@ -24,6 +24,7 @@
     
    self.weatherManager = [[WeatherManager alloc] init];
     
+    
     // Do any additional setup after loading the view.
     }
 
@@ -33,11 +34,16 @@
     
     [self.weatherManager getWeatherWithURL:urlString controller:self completion:^(id responseObject) {
         NSError *error;
+        NSUInteger i = [responseObject count];
+        NSLog(@"%lu", (unsigned long)i);
         WeatherUpdate *weather = [[WeatherUpdate alloc] initWithDictionary:responseObject error:&error];
         NSLog(@"%@",weather);
         
-        [self updateUIWithJSON:weather];
-        
+        if (i <= 0 ) {
+            WeatherManager *manager = [[WeatherManager alloc] init];
+            [manager showErrorServerAlert:error controller:self];
+        } else {
+            [self updateUIWithJSON:weather];}
     }];
 }
 
@@ -54,7 +60,6 @@
     if (self.tempLabel.text == nil) {
         self.tempLabel.hidden = YES;
     }
-    
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -67,8 +72,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 - (IBAction)dissmisKeyboard:(id)sender {
 }

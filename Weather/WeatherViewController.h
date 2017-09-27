@@ -19,4 +19,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelSunrise;
 @property (weak, nonatomic) IBOutlet UILabel *labelSunset;
 
+@property (nonatomic, readonly) BOOL isEmpty;
+
 @end

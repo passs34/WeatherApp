@@ -11,8 +11,10 @@
 
 
 @interface WeatherManager : NSObject
+@property (nonatomic, strong) UIAlertController *alert;
 
 -(void)showErrorAlert:(NSError*)error controller:(UIViewController*)controller;
 -(void)getWeatherWithURL:(NSString *)url controller:(UIViewController*)controller completion:(void (^)(id responseObject))completion;
+-(void)showErrorServerAlert:(NSError*)error controller:(UIViewController*)controller;
 
 @end
