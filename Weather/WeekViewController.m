@@ -14,29 +14,21 @@
 #import "WeekWeatherUpdate.h"
 #import "TableViewCell.h"
 #import "WeatherManager.h"
-
+#import "Urlmanagers.h"
+#import "LocationManager.h"
 @interface WeekViewController () <CLLocationManagerDelegate>
 @property (nonatomic) NSArray *weekArray;
 @property (nonatomic, strong) WeatherManager *weatherManager;
 
 @end
 
-@implementation WeekViewController {
-    CLLocationManager *locationManager;
-    BOOL didReciveLocation;
-}
+@implementation WeekViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    didReciveLocation = NO;
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    [locationManager requestWhenInUseAuthorization];
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [locationManager startUpdatingLocation];
     self.weatherManager = [[WeatherManager alloc] init];
-    
-}
+    [[LocationManager sharedInstance] startUpdatingLocation];
+    [self getWeatherWithCoordinates:[LocationManager sharedInstance].currentLocation.coordinate];}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -45,8 +37,7 @@
 
 -(void)getWeatherWithCoordinates:(CLLocationCoordinate2D)coordinates {
     
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@lat=%f&lon=%f%@", @"http://api.openweathermap.org/data/2.5/forecast?" , coordinates.latitude, coordinates.longitude, @"&units=metric&APPID=c5d4c2e7b159d4fa7b5dddd06d157141"];
+    NSString *urlString = [NSString stringWithFormat:@"%@lat=%f&lon=%f%@", WEEKURL , coordinates.latitude, coordinates.longitude, BASEURL2];
     
     [self.weatherManager getWeatherWithURL:urlString controller:self completion:^(id responseObject) {
         NSError *error;
@@ -57,14 +48,6 @@
         [self.tabelView reloadData];
     }];
     
-}
-
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    CLLocation *currentLocation = locations[0];
-    if (!didReciveLocation) {
-        [self getWeatherWithCoordinates:currentLocation.coordinate];
-        didReciveLocation = YES;
-    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

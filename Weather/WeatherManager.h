@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
 @interface WeatherManager : NSObject
 
 -(void)showErrorAlert:(NSError*)error controller:(UIViewController*)controller;

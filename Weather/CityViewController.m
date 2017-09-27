@@ -11,6 +11,7 @@
 #import "WeatherUpdate.h"
 #import "WeatherViewController.h"
 #import "WeatherManager.h"
+#import "Urlmanagers.h"
 @interface CityViewController () <UITextViewDelegate>
 @property (nonatomic, strong) WeatherManager *weatherManager;
 
@@ -24,13 +25,11 @@
    self.weatherManager = [[WeatherManager alloc] init];
     
     // Do any additional setup after loading the view.
-    
-    //[self getWeatherWithTextfield];
     }
 
 -(void)getWeatherWithTextfield
 {
-    NSString *urlString = [[NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?q=%@&units=metric&APPID=c5d4c2e7b159d4fa7b5dddd06d157141", self.textField.text] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *urlString = [[NSString stringWithFormat:@"%@q=%@%@", BASEURL, self.textField.text, BASEURL2] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     [self.weatherManager getWeatherWithURL:urlString controller:self completion:^(id responseObject) {
         NSError *error;

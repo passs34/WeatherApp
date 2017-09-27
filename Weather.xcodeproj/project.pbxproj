@@ -10,6 +10,7 @@
 		3E7D592F8D5BBE5C09F182DC /* libPods-WeatherUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3EA82626B027A4C39AEFA78 /* libPods-WeatherUITests.a */; };
 		6F95C2402A4862023871D16F /* libPods-Weather.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6CF3DE23A8C88ADBD179D1 /* libPods-Weather.a */; };
 		7100F2A6F0FEDA8F705F93E5 /* libPods-WeatherTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 508F307CBE623250DE8EC21B /* libPods-WeatherTests.a */; };
+		84B9D6471F7A982400E27FA0 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9D6461F7A982400E27FA0 /* LocationManager.m */; };
 		D20287A91F6458DD005EECED /* WeatherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D20287A81F6458DD005EECED /* WeatherManager.m */; };
 		D235338F1F5F58D20059E754 /* WeatherUpdate.m in Sources */ = {isa = PBXBuildFile; fileRef = D235338E1F5F58D20059E754 /* WeatherUpdate.m */; };
 		D23533911F5F66530059E754 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D23533901F5F66530059E754 /* SystemConfiguration.framework */; };
@@ -50,6 +51,9 @@
 		42D8A2C1B48524B71FB12F17 /* Pods-Weather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather.release.xcconfig"; path = "Pods/Target Support Files/Pods-Weather/Pods-Weather.release.xcconfig"; sourceTree = "<group>"; };
 		508F307CBE623250DE8EC21B /* libPods-WeatherTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeatherTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		845207F2070E6301A7F1C041 /* Pods-WeatherUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherUITests/Pods-WeatherUITests.release.xcconfig"; sourceTree = "<group>"; };
+		84B9D6441F7A81EC00E27FA0 /* Urlmanagers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Urlmanagers.h; sourceTree = "<group>"; };
+		84B9D6451F7A982400E27FA0 /* LocationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		84B9D6461F7A982400E27FA0 /* LocationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		8E4374EDC075FCBFD2E197E7 /* Pods-WeatherUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherUITests/Pods-WeatherUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BF6CF3DE23A8C88ADBD179D1 /* libPods-Weather.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Weather.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2C77654AC60226DD6AE4920 /* Pods-WeatherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherTests/Pods-WeatherTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +139,9 @@
 			children = (
 				D20287A71F6458DD005EECED /* WeatherManager.h */,
 				D20287A81F6458DD005EECED /* WeatherManager.m */,
+				84B9D6451F7A982400E27FA0 /* LocationManager.h */,
+				84B9D6461F7A982400E27FA0 /* LocationManager.m */,
+				84B9D6441F7A81EC00E27FA0 /* Urlmanagers.h */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -556,6 +563,7 @@
 				D2F727EE1F5EE9A4001AE6A2 /* AppDelegate.m in Sources */,
 				D235338F1F5F58D20059E754 /* WeatherUpdate.m in Sources */,
 				D23533941F606DD40059E754 /* Weather.m in Sources */,
+				84B9D6471F7A982400E27FA0 /* LocationManager.m in Sources */,
 				D235339A1F608B010059E754 /* WeekWeatherUpdate.m in Sources */,
 				D20287A91F6458DD005EECED /* WeatherManager.m in Sources */,
 				D237D0701F5EF1F70034F117 /* WeatherViewController.m in Sources */,

@@ -11,35 +11,31 @@
 #import "WeatherUpdate.h"
 #import <CoreLocation/CoreLocation.h>
 #import "WeatherManager.h"
+#import "Urlmanagers.h"
+#import "LocationManager.h"
 
 @interface WeatherViewController () <CLLocationManagerDelegate>
 @property (nonatomic, strong) WeatherManager *weatherManager;
+
 @end
 
-@implementation WeatherViewController {
-    CLLocationManager *locationManager;
-    BOOL didReciveLocation;
-}
+@implementation WeatherViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    didReciveLocation = NO;
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    [locationManager requestWhenInUseAuthorization];
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [locationManager startUpdatingLocation];
     self.weatherManager = [[WeatherManager alloc] init];
-   
+    [[LocationManager sharedInstance] startUpdatingLocation];
+    [self getWeatherWithCoordinates:[LocationManager sharedInstance].currentLocation.coordinate];
 }
 
 -(void)getWeatherWithCoordinates:(CLLocationCoordinate2D)coordinates {
-    NSString *urlString = [NSString stringWithFormat:@"%@lat=%f&lon=%f%@", @"http://api.openweathermap.org/data/2.5/weather?" , coordinates.latitude, coordinates.longitude, @"&units=metric&APPID=c5d4c2e7b159d4fa7b5dddd06d157141"];
+    NSString *urlString = [NSString stringWithFormat:@"%@lat=%f&lon=%f%@", BASEURL , coordinates.latitude, coordinates.longitude, BASEURL2];
     
     [self.weatherManager getWeatherWithURL:urlString controller:self completion:^(id responseObject) {
         NSError *error;
         WeatherUpdate *weather = [[WeatherUpdate alloc] initWithDictionary:responseObject error:&error];
         NSLog(@"%@",weather);
+       
         [self updateUIWithJSON:weather];
     }];
 }
@@ -63,13 +59,5 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    CLLocation *currentLocation = locations[0];
-    if (!didReciveLocation) {
-        [self getWeatherWithCoordinates:currentLocation.coordinate];
-        didReciveLocation = YES;
-        
-    }
-}
 
 @end
